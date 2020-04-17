@@ -9,11 +9,3 @@ class TestClass(metaclass = Singleton):
     def __init__(self, name = 'first', value = 12):
         self.name = name
         self.value = value
-
-    def __str__(self):
-        return str(self.name) + '_' + str(self.value)
-
-a = TestClass('second', 24)
-print(a)
-b = TestClass()
-print(b)
