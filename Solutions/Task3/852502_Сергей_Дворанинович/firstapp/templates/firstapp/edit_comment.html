@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "base.html" %}
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{{ building.name }}</title>
+    <style>
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:25px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        .fig {
+            text-align: center;
+        }
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:25px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+{% block content %}
+<body>
+
+    <h1>Изменение комментария</h1>
+
+    {% if user.is_authenticated %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <table>
+                <div class="col-md-10">{{form}}</div>
+            </table>
+        </div>
+        <input type="submit" value="Submit" />
+    </form>
+    {% endif %}
+
+</body>
+{% endblock %}
+
+</body>
+</html>

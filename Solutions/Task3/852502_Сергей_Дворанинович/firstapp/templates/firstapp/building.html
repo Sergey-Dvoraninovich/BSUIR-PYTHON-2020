@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "base.html" %}
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{{ building.name }}</title>
+    <style>
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:25px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        .fig {
+            text-align: center;
+        }
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:25px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+        }
+    </style>
+</head>
+
+
+{% block content %}
+<body>
+
+    <h1>{{ building.name }}</h1>
+    <p>Год постройки:</p>
+    <p>{{ building.date }}</p>
+
+    {% if archi.id != 4 %}
+        <h1>Архитектор</h1>
+        <img width="100px"
+             src="{{ archi.photo.url }}">
+        <p>{{ archi.name }}</p>
+        <p>{{ archi.date }}</p>
+        <p>{{ archi.text }}</p>
+    {% endif %}
+
+    {% if style.id != 4 %}
+        <h1>Стиль</h1>
+        <img width="100px"
+             src="{{ style.photo.url }}">
+        <p>{{ style.name }}</p>
+        <p>{{ archi.text }}</p>
+    {% endif %}
+
+    <h1>О сооружении:</h1>
+    <p>{{ building.text }}</p>
+    {% for product in photoes %}
+        <p class = "fig">
+            <img width="550px" src="{{ product.photo.url }}" class="center">
+        </p>
+    {% endfor %}
+
+    {% if comments_data %}
+      <h1>Комментарии:</h1>
+      <lu>
+      {% for comment_data in comments_data %}
+         <p>
+            <img width="60px"
+                 src="{% if comment_data.1.photo %}{{ comment_data.1.photo.url }}{% else %}{% static "images/no_user.png" %}{% endif %}"
+                 alt="Stones along the river"
+                 align = "center"
+                 margin-left = "10px"
+                 class = "frame">
+            {{ comment_data.0.get_username }}
+         </p>
+
+         <p>
+            {% if comment_data.2.is_edited %}
+                edited
+            {% endif %}
+         </p>
+          <p>{{ comment_data.2.time }}</p>
+         <p style= "margin-left:20px;" >
+            {{ comment_data.2.text }}
+         </p>
+         <p style= "margin-left:20px;" >
+            {% if comment_data.2.photo %}
+                <img width="300px" src="{{ comment_data.2.photo.url }}">
+            {% endif %}
+         </p>
+        {% if user_id%}
+         {% if user_id == comment_data.0.id %}
+          {% if ref_building_id %}
+              <p>
+                <a href="http://127.0.0.1:8000/comment_edit/{{ ref_building_id }}/{{ comment_data.2.id }}/">редактировать</a>
+              </p>
+              <p>
+                <a href="http://127.0.0.1:8000/comment_delete/{{ ref_building_id }}/{{ comment_data.2.id }}/">удалить</a>
+              </p>
+          {% endif %}
+         {% endif %}
+        {% endif %}
+      {% endfor %}
+      </lu>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <table>
+                <div class="col-md-10">{{form}}</div>
+            </table>
+        </div>
+        <input type="submit" value="Submit" />
+    </form>
+    {% endif %}
+
+</body>
+{% endblock %}
+</html>
