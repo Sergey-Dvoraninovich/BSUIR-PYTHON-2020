@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>Hello Django</title>
+    <style>
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:25px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ header }}</h1>
+    <p>Name: {{ user.name}} Age: {{user.age}}</p>
+    <p>Address: ул. {{address.0}}, д. {{address.1}}, кв. {{address.2}}</p>
+    <p>Langs: {{langs.0}}, {{langs.1}}</p>
+    <h1>Another image</h1>
+    <img src="{% static "images/top.jpg" %}" alt="Stones along the river" >
+    <p>{% now "Y" %}</p>
+    <p>{% now "F j Y" %}</p>
+    <p>{% now "N, j, Y" %}</p>
+    <p>{% now "N j, Y, P" %}</p>
+
+   {% with name="Tom" age=29 %}
+    <div>
+        <p>Name: {{ name }}</p>
+        <p>Age: {{ age }}</p>
+    </div>
+    {% endwith %}
+
+    <ul>
+        {% for lan in langs %}
+        <li>{{ lan }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+        {% for field in form %}
+        <div class="row">
+            {{field.label_tag}}
+            <div class="col-md-10">{{field}}</div>
+        </div>
+        {% endfor %}
+        </div>
+        <input type="submit" value="Send" >
+    </form>
+
+    <h2>Dynamic content</h2>
+
+    <p>The library has the following record counts:</p>
+    <ul>
+    <li><strong>Books:</strong> {{ num_books }}</li>
+    <li><strong>Authors:</strong> {{ num_authors }}</li>
+    </ul>
+
+    <p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+
+</body>
+</html>
