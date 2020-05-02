@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body rightmargin = 250px leftmargin = 250px>
+    {% for product in profile %}
+        <p>
+            <img width="50px" src="{{ product.image.url }}" align="middle" >
+            {{ n }}
+            {{product.id}}
+            {{ n }}
+            {{product.name}}
+            <p leftmargin = 60px>{{product.name}}</p>
+        </p>
+    {% endfor %}
+    {% for product in photoes %}
+        <p>
+            <img width="550px" src="{{ product.photo.url }}" align="middle" >
+        </p>
+    {% endfor %}
+</body>
+</html>
