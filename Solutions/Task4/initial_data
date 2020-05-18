@@ -1,0 +1,18 @@
+[
+   {
+       "model": "firstapp.New_style",
+       "pk": 10,
+       "fields": {
+           "name" : "Конструктивизм",
+           "text" : "good"
+       }
+   },
+   {
+       "model": "firstapp.New_style",
+       "pk": 11,
+       "fields": {
+           "name" : "Конструктивизм",
+           "text" : "good"
+       }
+   }
+]

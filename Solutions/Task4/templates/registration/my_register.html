@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "base.html" %}
+<html>
+<head>
+    <title>Создание аккаунта</title>
+</head>
+<body>
+
+{% block content %}
+    <h1>Регистрация</h1>
+    <p>Пожалуйста, авторизуйтесь</p>
+    <form action="." method="post">
+        {{ user_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Регистрация"></p>
+    </form>
+{% endblock %}
+
+</body>
+</html>

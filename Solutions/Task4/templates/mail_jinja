@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4> Верификация аккаунта </h4>
+    <p>
+        На этот адрес придёт письмо со ссылкой для верификации
+    </p>
+    <h4> Связанный адрес электронной почты: </h4>
+    <p>
+        {{ user_mail }}
+    </p>
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {{form}}
+
+        <input type="submit" value="Отправить" />
+    </form>
+    <h4>
+        {{ result }}
+    </h4>
+    <p>
+        {{ mail_result }}
+    </p>
+{% endblock %}

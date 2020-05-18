@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "base.html" %}
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{{ building.name }}</title>
+    <style>
+        .myfield{
+            border:1px solid #ccc;
+            border-radius:5px;
+            height:25px;
+            width:200px;
+            margin: 10px 10px 10px 0;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        .fig {
+            text-align: center;
+        }
+        .form_button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #bd1915;
+            outline: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+         .superbutton {
+             width: 150px;
+             height: 40px;
+             border-radius: 20px;
+             background: #bd1915;
+             color: #fff;
+             font-size: 18px;
+             cursor: pointer;
+         }
+         .body{
+            background-color: #D4E6B3;
+         }
+         TD.even {
+            border-bottom: 1px solid black;
+            background-color: #D4E6B3;/* Цвет фона четных строк */
+         }
+    </style>
+</head>
+
+{% block content %}
+<body>
+
+    <h1>{{ building.name }}</h1>
+    <p>Год постройки:</p>
+    <p>{{ building.date }}</p>
+
+    {% if archi.id != 4 %}
+        <h1>Архитектор</h1>
+        <img width="100px"
+             src="{{ archi.photo.url }}">
+        <p>{{ archi.name }}</p>
+        <p>{{ archi.date }}</p>
+        <p>{{ archi.text }}</p>
+    {% endif %}
+
+    {% if style.id != 4 %}
+        <h1>Стиль</h1>
+        <img width="100px"
+             src="{{ style.photo.url }}">
+        <p>{{ style.name }}</p>
+        <p>{{ archi.text }}</p>
+    {% endif %}
+
+    <h1>О сооружении:</h1>
+    <p>{{ building.text }}</p>
+    {% for product in photoes %}
+        <p class = "fig">
+            <img width="550px" src="{{ product.photo.url }}" class="center">
+        </p>
+    {% endfor %}
+
+    {% if comments_data %}
+      <h1>Комментарии:</h1>
+      <table width="500">
+          {% for comment_data in comments_data %}
+              <tr>
+                  <td>
+                      <p>
+                           <img width="60px"
+                                src="{% if comment_data.1.photo %}{{ comment_data.1.photo.url }}{% else %}{% static "images/no_user.png" %}{% endif %}"
+                                alt="Stones along the river"
+                                align = "center"
+                                margin-left = "10px"
+                                class = "frame">
+                           {{ comment_data.0.get_username }}
+                      </p>
+
+                      <p>
+                           <a>
+                              {{ comment_data.2.time }}
+                           </a>
+                           <a margin-left = 20px>
+                           {% if comment_data.2.is_edited %}
+                               <b>
+                               edited
+                               </b>
+                           {% endif %}
+                           </a>
+                      </p>
+
+
+                      <p style = "margin-left:20px;" >
+                         {{ comment_data.2.text }}
+                      </p>
+
+                      <p style= "margin-left:20px;" >
+                         {% if comment_data.2.photo %}
+                             <img width="500px" src="{{ comment_data.2.photo.url }}">
+                         {% endif %}
+                      </p>
+                  </td>
+              </tr>
+              <tr>
+                  <td class = "even" align = "right">
+                      {% if user_id%}
+                          {% if user_id == comment_data.0.id %}
+                             {% if ref_building_id %}
+                                <a href="http://127.0.0.1:8000/comment_edit/{{ ref_building_id }}/{{ comment_data.2.id }}/">редактировать</a>
+                                <a>|</a>
+                                <a href="http://127.0.0.1:8000/comment_delete/{{ ref_building_id }}/{{ comment_data.2.id }}/">удалить</a>
+                             {% endif %}
+                          {% endif %}
+                     {% endif %}
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                     <p>
+                         <img src="{% static "images/line.png" %}" alt="Stones along the river" >
+                     </p>
+                  </td>
+              </tr>
+          {% endfor %}
+      </table>
+    {% endif %}
+
+    {% if is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+        {% for field in form %}
+        <div class="row">
+            {{field.label_tag}}
+            <div>{{field}}</div>
+        </div>
+        {% endfor %}
+        </div>
+        <input class="superbutton" type="submit" value="Send" >
+    </form>
+    {% else %}
+        <h3> Аккаунт не верифицирован </h3>
+        <p>
+        Чтобы оставить комментарий пройдите верификацию
+        </p>
+        <a href="http://127.0.0.1:8000/mail_verify/">Верификация</a>
+    {% endif %}
+
+</body>
+{% endblock %}
+</html>

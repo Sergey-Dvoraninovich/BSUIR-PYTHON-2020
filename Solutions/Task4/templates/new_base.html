@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  {% block title %}
+      <title>Buidings</title>
+  {% endblock %}
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Добавление дополнительного статического CSS файла -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-sm-2">
+      {% block sidebar %}
+          <ul class="bullet>
+              <li><a href="">Home</a>Home</li>
+              <li><a href="">All books</a></li>
+              <li><a href="">All authors</a></li>
+          </ul>
+      {% endblock %}
+      </div>
+
+      <div class="col-sm-10 ">
+      {% block content %}
+          <h1>Local Library Home</h1>
+
+          <p>Welcome to <em>LocalLibrary</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+
+          <h2>Dynamic content</h2>
+
+          <p>The library has the following record counts:</p>
+          <ul>
+              <li><strong>Books:</strong> {{ num_books }}</li>
+              <li><strong>Copies:</strong> {{ num_instances }}</li>
+              <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
+              <li><strong>Authors:</strong> {{ num_authors }}</li>
+          </ul>
+      {% endblock %}
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>
